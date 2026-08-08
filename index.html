@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem('octozopia_theme_v1');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OCTOZOPIA — Password Analyzer</title>
+<meta name="description" content="Analyze password strength, entropy, crack time and breach status — entirely in your browser." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="oz-shell">
+
+  <!-- Sidebar -->
+  <aside class="oz-sidebar" data-nav-menu>
+    <div class="oz-brand">
+      <div class="oz-brand__mark">OZ</div>
+      <div>
+        <div class="oz-brand__name">OCTOZOPIA</div>
+        <div class="oz-brand__tag">Password Security</div>
+      </div>
+    </div>
+    <nav>
+
+    
+      <ul class="oz-nav__list">
+        <li><a class="oz-nav__link oz-nav__link--active" href="index.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+          Analyzer
+        </a></li>
+        <li><a class="oz-nav__link" href="generator.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 3l3 3M15 5l2 2"/></svg>
+          Generator
+        </a></li>
+        <li><a class="oz-nav__link" href="compare.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4v13M7 4L4 8m3-4l3 4"/><path d="M17 20V7M17 20l-3-4m3 4l3-4"/></svg>
+          Compare
+        </a></li>
+        <li><a class="oz-nav__link" href="dashboard.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M11 20V4M18 20v-7"/></svg>
+          Dashboard
+        </a></li>
+        <li><a class="oz-nav__link" href="education.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6.5C4 5.7 4.7 5 5.5 5H12v14H5.5c-.8 0-1.5-.7-1.5-1.5v-11z"/><path d="M20 6.5c0-.8-.7-1.5-1.5-1.5H12v14h6.5c.8 0 1.5-.7 1.5-1.5v-11z"/></svg>
+          Learn
+        </a></li>
+      </ul>
+    </nav>
+    <span class="oz-theme-switcher-label">Theme</span>
+    <div data-theme-switcher></div>
+    <div class="oz-sidebar__footer">
+      100% local analysis.<br/>Nothing you type is ever sent anywhere, except the 5-character hash prefix used for breach checks.
+    </div>
+  </aside>
+
+  <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+    <!-- Mobile top bar -->
+    <div class="oz-topbar">
+      <div class="oz-brand"><div class="oz-brand__mark">OZ</div><div class="oz-brand__name">OCTOZOPIA</div></div>
+      <button class="oz-nav__toggle" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+
+    <main class="oz-main">
+      <div class="oz-page-header">
+        <span class="oz-eyebrow">Real-time · Local-only</span>
+        <h1 class="oz-page-title">Password Analyzer</h1>
+        <p class="oz-page-sub">Type or paste a password or passphrase below. Every check — entropy, patterns, crack time — runs in your browser as you type.</p>
+      </div>
+
+      <!-- Input card -->
+      <div class="oz-card" style="margin-bottom:20px;">
+        <div class="oz-input-wrap">
+          <input id="pw-input" class="oz-password-input" type="password" autocomplete="off" spellcheck="false"
+                 placeholder="Start typing a password or passphrase…" aria-label="Password input" />
+          <div class="oz-input-actions">
+            <button class="oz-icon-btn" id="btn-toggle-visibility" title="Show / hide password" aria-label="Show or hide password">
+              <svg id="icon-eye" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+            </button>
+            <button class="oz-icon-btn" id="btn-copy" title="Copy password" aria-label="Copy password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+            </button>
+            <button class="oz-icon-btn" id="btn-clear" title="Clear password" aria-label="Clear password">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M6 6l12 12M18 6L6 18"/></svg>
+            </button>
+          </div>
+        </div>
+        <div style="display:flex; justify-content:space-between; align-items:center; margin-top:10px;">
+          <span id="length-readout" style="font-size:12px; color:var(--oz-ink-faint);">0 characters</span>
+          <div style="display:flex; gap:8px;">
+            <button class="oz-btn oz-btn--secondary oz-btn--sm" id="btn-check-breach">Check breach status</button>
+            <button class="oz-btn oz-btn--primary oz-btn--sm" id="btn-export">Export report</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Heatmap: signature element -->
+      <div class="oz-card" style="margin-bottom:20px;">
+        <div class="oz-card__title">Password heatmap</div>
+        <p class="oz-card__sub">Every character is scanned locally and grouped into segments. Hover a segment to see why it was flagged.</p>
+        <div id="heatmap" class="oz-heatmap"><span class="oz-heatmap-empty">Your password heatmap will appear here as you type…</span></div>
+        <div class="oz-legend">
+          <span><span class="oz-legend__dot" style="background:var(--oz-danger)"></span>Personal info / dates</span>
+          <span><span class="oz-legend__dot" style="background:var(--oz-warning)"></span>Predictable patterns</span>
+          <span><span class="oz-legend__dot" style="background:var(--oz-info)"></span>Dictionary word</span>
+          <span><span class="oz-legend__dot" style="background:var(--oz-accent)"></span>Unpredictable</span>
+        </div>
+      </div>
+
+      <div class="oz-grid-2" style="margin-bottom:20px;">
+        <!-- Score -->
+        <div class="oz-card">
+          <div class="oz-card__title">Security score</div>
+          <p class="oz-card__sub">Composite of length, entropy, character variety and pattern penalties.</p>
+          <div style="display:flex; align-items:center; gap:18px; margin-bottom:10px;">
+            <div class="oz-score-badge" id="score-value">0</div>
+            <div>
+              <span class="oz-level-pill" id="level-pill" style="background:var(--oz-danger-soft); color:var(--oz-danger);">Very Weak</span>
+            </div>
+          </div>
+          <div class="oz-meter-track"><div class="oz-meter-fill" id="score-bar"></div></div>
+          <p class="oz-level-explain" id="level-explain"></p>
+        </div>
+
+        <!-- Entropy gauge -->
+        <div class="oz-card">
+          <div class="oz-card__title">Entropy</div>
+          <p class="oz-card__sub">Estimated randomness, based on character pool size and length.</p>
+          <div class="oz-gauge-wrap">
+            <div class="oz-gauge" id="entropy-gauge"></div>
+            <div>
+              <div style="font-family:var(--oz-font-mono); font-size:24px; font-weight:600;" id="entropy-value">0.0 bits</div>
+              <div style="font-size:12.5px; color:var(--oz-ink-soft);" id="entropy-label">Very Predictable</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="oz-grid-2" style="margin-bottom:20px;">
+        <!-- Checks -->
+        <div class="oz-card">
+          <div class="oz-card__title">Security checks</div>
+          <p class="oz-card__sub">11 local checks run against your input.</p>
+          <div id="checks-list"></div>
+        </div>
+
+        <!-- Crack time + suggestions -->
+        <div style="display:flex; flex-direction:column; gap:20px;">
+          <div class="oz-card">
+            <div class="oz-card__title">Estimated crack time</div>
+            <p class="oz-card__sub">How long different attackers would need, on average.</p>
+            <table class="oz-table" id="crack-table"><tbody></tbody></table>
+          </div>
+          <div class="oz-card">
+            <div class="oz-card__title">Suggestions</div>
+            <ul id="suggestions-list" style="margin:0; padding-left:18px; font-size:13.5px; color:var(--oz-ink-soft); display:flex; flex-direction:column; gap:6px;"></ul>
+          </div>
+        </div>
+      </div>
+
+      <!-- Breach detection -->
+      <div class="oz-card" style="margin-bottom:20px;">
+        <div class="oz-card__title">Breach detection</div>
+        <p class="oz-card__sub">Uses the Have I Been Pwned k-Anonymity API. Only a 5-character hash prefix is ever sent — never your password.</p>
+        <div id="breach-result" style="font-size:13.5px; color:var(--oz-ink-soft);">Click "Check breach status" above to look this password up.</div>
+      </div>
+
+      <div class="oz-fact-bar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0;"><path d="M12 2l2.4 5.2L20 8l-4 4 1 5.6L12 15l-5 2.6L8 12 4 8l5.6-.8L12 2z"/></svg>
+        <span class="oz-fact-text" id="fact-text"></span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/common.js"></script>
+<script src="/analyzer.js"></script>
+</body>
+</html>

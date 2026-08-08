@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem('octozopia_theme_v1');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OCTOZOPIA — Security Dashboard</title>
+<meta name="description" content="Your local password security dashboard: statistics, entropy trends and recommendations." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.4/chart.umd.min.js"></script>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="oz-shell">
+  <aside class="oz-sidebar" data-nav-menu>
+    <div class="oz-brand">
+      <div class="oz-brand__mark">OZ</div>
+      <div><div class="oz-brand__name">OCTOZOPIA</div><div class="oz-brand__tag">Password Security</div></div>
+    </div>
+    <nav>
+      <ul class="oz-nav__list">
+        <li><a class="oz-nav__link" href="index.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+          Analyzer
+        </a></li>
+        <li><a class="oz-nav__link" href="generator.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 3l3 3M15 5l2 2"/></svg>
+          Generator
+        </a></li>
+        <li><a class="oz-nav__link" href="compare.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4v13M7 4L4 8m3-4l3 4"/><path d="M17 20V7M17 20l-3-4m3 4l3-4"/></svg>
+          Compare
+        </a></li>
+        <li><a class="oz-nav__link oz-nav__link--active" href="dashboard.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M11 20V4M18 20v-7"/></svg>
+          Dashboard
+        </a></li>
+        <li><a class="oz-nav__link" href="education.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6.5C4 5.7 4.7 5 5.5 5H12v14H5.5c-.8 0-1.5-.7-1.5-1.5v-11z"/><path d="M20 6.5c0-.8-.7-1.5-1.5-1.5H12v14h6.5c.8 0 1.5-.7 1.5-1.5v-11z"/></svg>
+          Learn
+        </a></li>
+      </ul>
+    </nav>
+    <span class="oz-theme-switcher-label">Theme</span>
+    <div data-theme-switcher></div>
+    <div class="oz-sidebar__footer">Stats are built from local history — score and entropy only, never the passwords themselves.</div>
+  </aside>
+
+  <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+    <div class="oz-topbar">
+      <div class="oz-brand"><div class="oz-brand__mark">OZ</div><div class="oz-brand__name">OCTOZOPIA</div></div>
+      <button class="oz-nav__toggle" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+
+    <main class="oz-main">
+      <div class="oz-page-header">
+        <span class="oz-eyebrow">Chart.js · Local history</span>
+        <h1 class="oz-page-title">Security Dashboard</h1>
+        <p class="oz-page-sub">An overview built from passwords you've analyzed this browser — stored as anonymous score metadata only.</p>
+      </div>
+
+      <div class="oz-grid-3" style="margin-bottom:20px;">
+        <div class="oz-card">
+          <div class="oz-card__sub" style="margin-bottom:2px;">Analyzed locally</div>
+          <div class="oz-score-badge" id="stat-total" style="font-size:28px;">0</div>
+        </div>
+        <div class="oz-card">
+          <div class="oz-card__sub" style="margin-bottom:2px;">Average score</div>
+          <div class="oz-score-badge" id="stat-avg" style="font-size:28px;">0</div>
+        </div>
+        <div class="oz-card">
+          <div class="oz-card__sub" style="margin-bottom:2px;">Most common level</div>
+          <div class="oz-score-badge" id="stat-common" style="font-size:22px;">—</div>
+        </div>
+      </div>
+
+      <div class="oz-grid-2" style="margin-bottom:20px;">
+        <div class="oz-card">
+          <div class="oz-card__title">Strength level distribution</div>
+          <p class="oz-card__sub">Across all local analyses.</p>
+          <canvas id="chart-levels" height="220"></canvas>
+        </div>
+        <div class="oz-card">
+          <div class="oz-card__title">Entropy trend</div>
+          <p class="oz-card__sub">Bits of entropy over your most recent analyses.</p>
+          <canvas id="chart-entropy" height="220"></canvas>
+        </div>
+      </div>
+
+      <div class="oz-card" style="margin-bottom:20px;">
+        <div class="oz-card__title">Quick character-mix test</div>
+        <p class="oz-card__sub">Type a sample password to see its character distribution and security radar. This sample is not saved.</p>
+        <div class="oz-input-wrap" style="margin-bottom:6px; max-width:420px;">
+          <input id="quick-input" class="oz-password-input" type="text" autocomplete="off" spellcheck="false" placeholder="Try a password here…" />
+        </div>
+        <p class="oz-level-explain" id="quick-explain" style="max-width:420px; margin-bottom:16px;"></p>
+        <div class="oz-grid-2">
+          <div><canvas id="chart-distribution" height="220"></canvas></div>
+          <div class="oz-radar-wrap"><canvas id="chart-radar" height="220"></canvas></div>
+        </div>
+      </div>
+
+      <div class="oz-grid-2" style="margin-bottom:20px;">
+        <div class="oz-card">
+          <div class="oz-card__title">Security recommendations</div>
+          <ul style="margin:0; padding-left:0; list-style:none; display:flex; flex-direction:column; gap:10px; font-size:13.5px;">
+            <li style="display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--oz-safe);">✓</span> Use unique passwords for every account.</li>
+            <li style="display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--oz-safe);">✓</span> Enable multi-factor authentication (MFA) wherever it's offered.</li>
+            <li style="display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--oz-safe);">✓</span> Use a password manager to generate and store credentials.</li>
+            <li style="display:flex; gap:8px; align-items:flex-start;"><span style="color:var(--oz-safe);">✓</span> Avoid personal information like names, birthdays, or pet names.</li>
+          </ul>
+        </div>
+        <div class="oz-card">
+          <div class="oz-card__title">Recent activity</div>
+          <div style="max-height:220px; overflow-y:auto;">
+            <table class="oz-table" id="history-table"><thead><tr><th>Time</th><th>Score</th><th>Level</th><th>Entropy</th></tr></thead><tbody></tbody></table>
+          </div>
+          <button class="oz-btn oz-btn--ghost oz-btn--sm" id="btn-clear-history" style="margin-top:12px;">Clear local history</button>
+        </div>
+      </div>
+
+      <div class="oz-fact-bar">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0;"><path d="M12 2l2.4 5.2L20 8l-4 4 1 5.6L12 15l-5 2.6L8 12 4 8l5.6-.8L12 2z"/></svg>
+        <span class="oz-fact-text" id="fact-text"></span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/common.js"></script>
+<script src="/common.js"></script>
+</body>
+</html>

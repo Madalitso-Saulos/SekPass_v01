@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem('octozopia_theme_v1');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OCTOZOPIA — Learn</title>
+<meta name="description" content="Password security education: how attacks work, and how to build passwords that resist them." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="oz-shell">
+  <aside class="oz-sidebar" data-nav-menu>
+    <div class="oz-brand">
+      <div class="oz-brand__mark">OZ</div>
+      <div><div class="oz-brand__name">OCTOZOPIA</div><div class="oz-brand__tag">Password Security</div></div>
+    </div>
+    <nav>
+      <ul class="oz-nav__list">
+        <li><a class="oz-nav__link" href="index.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+          Analyzer
+        </a></li>
+        <li><a class="oz-nav__link" href="generator.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 3l3 3M15 5l2 2"/></svg>
+          Generator
+        </a></li>
+        <li><a class="oz-nav__link" href="compare.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4v13M7 4L4 8m3-4l3 4"/><path d="M17 20V7M17 20l-3-4m3 4l3-4"/></svg>
+          Compare
+        </a></li>
+        <li><a class="oz-nav__link" href="dashboard.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M11 20V4M18 20v-7"/></svg>
+          Dashboard
+        </a></li>
+        <li><a class="oz-nav__link oz-nav__link--active" href="education.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6.5C4 5.7 4.7 5 5.5 5H12v14H5.5c-.8 0-1.5-.7-1.5-1.5v-11z"/><path d="M20 6.5c0-.8-.7-1.5-1.5-1.5H12v14h6.5c.8 0 1.5-.7 1.5-1.5v-11z"/></svg>
+          Learn
+        </a></li>
+      </ul>
+    </nav>
+    <span class="oz-theme-switcher-label">Theme</span>
+    <div data-theme-switcher></div>
+    <div class="oz-sidebar__footer">Knowledge is part of the defense.</div>
+  </aside>
+
+  <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+    <div class="oz-topbar">
+      <div class="oz-brand"><div class="oz-brand__mark">OZ</div><div class="oz-brand__name">OCTOZOPIA</div></div>
+      <button class="oz-nav__toggle" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+
+    <main class="oz-main">
+      <div class="oz-page-header">
+        <span class="oz-eyebrow">Security education</span>
+        <h1 class="oz-page-title">Understand the threat, build the defense</h1>
+        <p class="oz-page-sub">A short guide to how password attacks actually work, and what makes a password resist them.</p>
+      </div>
+
+      <div class="oz-fact-bar" style="margin-bottom:24px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0;"><path d="M12 2l2.4 5.2L20 8l-4 4 1 5.6L12 15l-5 2.6L8 12 4 8l5.6-.8L12 2z"/></svg>
+        <span class="oz-fact-text" id="fact-text"></span>
+      </div>
+
+      <div class="oz-grid-2" style="margin-bottom:20px;">
+        <div class="oz-card">
+          <div class="oz-card__title">How attacks work</div>
+          <ul style="margin:0; padding-left:18px; font-size:13.5px; color:var(--oz-ink-soft); display:flex; flex-direction:column; gap:10px;">
+            <li><strong style="color:var(--oz-ink);">Credential stuffing</strong> — attackers replay email/password pairs leaked from other breaches against new sites, hoping you reused them.</li>
+            <li><strong style="color:var(--oz-ink);">Dictionary attacks</strong> — automated tools try common words, names and known passwords first, since most people don't pick random strings.</li>
+            <li><strong style="color:var(--oz-ink);">Brute force</strong> — every possible combination is tried systematically; short or low-diversity passwords fall quickly to GPU-accelerated hardware.</li>
+            <li><strong style="color:var(--oz-ink);">Pattern guessing</strong> — names, birth years, keyboard walks ("qwerty") and simple substitutions (a→@) are tried before random guessing even begins.</li>
+          </ul>
+        </div>
+        <div class="oz-card">
+          <div class="oz-card__title">What actually helps</div>
+          <ul style="margin:0; padding-left:18px; font-size:13.5px; color:var(--oz-ink-soft); display:flex; flex-direction:column; gap:10px;">
+            <li><strong style="color:var(--oz-ink);">Length over complexity</strong> — a 20-character passphrase usually resists cracking far longer than an 8-character jumble of symbols.</li>
+            <li><strong style="color:var(--oz-ink);">Uniqueness</strong> — a password manager lets every account get its own random credential, so one breach can't cascade.</li>
+            <li><strong style="color:var(--oz-ink);">Multi-factor authentication</strong> — even a guessed password becomes far less useful with a second verification step.</li>
+            <li><strong style="color:var(--oz-ink);">No personal information</strong> — names, birthdays and pet names are often public or guessable from social media.</li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="oz-card" style="margin-bottom:20px;">
+        <div class="oz-card__title">Password tips checklist</div>
+        <div class="oz-grid-2">
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:13.5px;">
+            <label style="display:flex; gap:8px; align-items:center;"><input type="checkbox" /> Use 12+ characters, ideally a passphrase</label>
+            <label style="display:flex; gap:8px; align-items:center;"><input type="checkbox" /> Mix uppercase, lowercase, numbers and symbols</label>
+            <label style="display:flex; gap:8px; align-items:center;"><input type="checkbox" /> Avoid names, birthdays and dictionary words</label>
+          </div>
+          <div style="display:flex; flex-direction:column; gap:8px; font-size:13.5px;">
+            <label style="display:flex; gap:8px; align-items:center;"><input type="checkbox" /> Use a unique password for every account</label>
+            <label style="display:flex; gap:8px; align-items:center;"><input type="checkbox" /> Turn on multi-factor authentication</label>
+            <label style="display:flex; gap:8px; align-items:center;"><input type="checkbox" /> Store passwords in a password manager, not memory</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="oz-grid-2">
+        <a href="index.html" class="oz-card" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; transition:border-color .15s;">
+          <div>
+            <div class="oz-card__title" style="margin-bottom:2px;">Analyze a password</div>
+            <div class="oz-card__sub" style="margin:0;">See exactly where a password is weak.</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+        <a href="generator.html" class="oz-card" style="text-decoration:none; display:flex; align-items:center; justify-content:space-between; transition:border-color .15s;">
+          <div>
+            <div class="oz-card__title" style="margin-bottom:2px;">Generate something stronger</div>
+            <div class="oz-card__sub" style="margin:0;">Create a secure password or passphrase.</div>
+          </div>
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+        </a>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/common.js"></script>
+<script src="/education.js"></script>
+</body>
+</html>

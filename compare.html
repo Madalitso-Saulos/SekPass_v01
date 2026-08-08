@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem('octozopia_theme_v1');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OCTOZOPIA — Compare Passwords</title>
+<meta name="description" content="Compare two passwords side by side: score, entropy, crack time and security rating." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="oz-shell">
+  <aside class="oz-sidebar" data-nav-menu>
+    <div class="oz-brand">
+      <div class="oz-brand__mark">OZ</div>
+      <div><div class="oz-brand__name">OCTOZOPIA</div><div class="oz-brand__tag">Password Security</div></div>
+    </div>
+    <nav>
+      <ul class="oz-nav__list">
+        <li><a class="oz-nav__link" href="index.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+          Analyzer
+        </a></li>
+        <li><a class="oz-nav__link" href="generator.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 3l3 3M15 5l2 2"/></svg>
+          Generator
+        </a></li>
+        <li><a class="oz-nav__link oz-nav__link--active" href="compare.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4v13M7 4L4 8m3-4l3 4"/><path d="M17 20V7M17 20l-3-4m3 4l3-4"/></svg>
+          Compare
+        </a></li>
+        <li><a class="oz-nav__link" href="dashboard.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M11 20V4M18 20v-7"/></svg>
+          Dashboard
+        </a></li>
+        <li><a class="oz-nav__link" href="education.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6.5C4 5.7 4.7 5 5.5 5H12v14H5.5c-.8 0-1.5-.7-1.5-1.5v-11z"/><path d="M20 6.5c0-.8-.7-1.5-1.5-1.5H12v14h6.5c.8 0 1.5-.7 1.5-1.5v-11z"/></svg>
+          Learn
+        </a></li>
+      </ul>
+    </nav>
+    <span class="oz-theme-switcher-label">Theme</span>
+    <div data-theme-switcher></div>
+    <div class="oz-sidebar__footer">Both passwords are compared locally, side by side.</div>
+  </aside>
+
+  <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+    <div class="oz-topbar">
+      <div class="oz-brand"><div class="oz-brand__mark">OZ</div><div class="oz-brand__name">OCTOZOPIA</div></div>
+      <button class="oz-nav__toggle" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+
+    <main class="oz-main">
+      <div class="oz-page-header">
+        <span class="oz-eyebrow">Side-by-side · Local-only</span>
+        <h1 class="oz-page-title">Compare Passwords</h1>
+        <p class="oz-page-sub">See exactly how two passwords stack up on score, entropy and crack resistance.</p>
+      </div>
+
+      <div class="oz-grid-2" style="margin-bottom:20px;">
+        <div class="oz-card">
+          <div class="oz-card__title">Password A</div>
+          <div class="oz-input-wrap">
+            <input id="pw-a" class="oz-password-input" type="password" autocomplete="off" spellcheck="false" placeholder="Enter first password…" />
+            <div class="oz-input-actions">
+              <button class="oz-icon-btn" data-show-toggle="pw-a" title="Show/hide">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <p class="oz-level-explain" id="explain-a"></p>
+        </div>
+        <div class="oz-card">
+          <div class="oz-card__title">Password B</div>
+          <div class="oz-input-wrap">
+            <input id="pw-b" class="oz-password-input" type="password" autocomplete="off" spellcheck="false" placeholder="Enter second password…" />
+            <div class="oz-input-actions">
+              <button class="oz-icon-btn" data-show-toggle="pw-b" title="Show/hide">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+              </button>
+            </div>
+          </div>
+          <p class="oz-level-explain" id="explain-b"></p>
+        </div>
+      </div>
+
+      <div id="winner-banner" class="oz-fact-bar" style="margin-bottom:20px; display:none;"></div>
+
+      <div class="oz-card">
+        <div class="oz-card__title">Comparison</div>
+        <table class="oz-table">
+          <thead>
+            <tr><th>Metric</th><th>Password A</th><th>Password B</th></tr>
+          </thead>
+          <tbody id="compare-body"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+</div>
+<script src="/common.js"></script>
+<script src="/compare.js"></script>
+</body>
+</html>

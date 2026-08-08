@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<script>(function(){try{var t=localStorage.getItem('octozopia_theme_v1');if(t)document.documentElement.setAttribute('data-theme',t);}catch(e){}})();</script>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>OCTOZOPIA — Password Generator</title>
+<meta name="description" content="Generate cryptographically secure passwords and passphrases locally in your browser." />
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://cdn.tailwindcss.com"></script>
+<link rel="stylesheet" href="/styles.css" />
+</head>
+<body>
+<div class="oz-shell">
+  <aside class="oz-sidebar" data-nav-menu>
+    <div class="oz-brand">
+      <div class="oz-brand__mark">OZ</div>
+      <div><div class="oz-brand__name">OCTOZOPIA</div><div class="oz-brand__tag">Password Security</div></div>
+    </div>
+    <nav>
+      <ul class="oz-nav__list">
+        <li><a class="oz-nav__link" href="index.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 3l7 3v6c0 4.5-3 8-7 9-4-1-7-4.5-7-9V6l7-3z"/><path d="M9.5 12l1.8 1.8L15 10"/></svg>
+          Analyzer
+        </a></li>
+        <li><a class="oz-nav__link oz-nav__link--active" href="generator.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="8" cy="15" r="4"/><path d="M11 12l9-9M17 3l3 3M15 5l2 2"/></svg>
+          Generator
+        </a></li>
+        <li><a class="oz-nav__link" href="compare.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M7 4v13M7 4L4 8m3-4l3 4"/><path d="M17 20V7M17 20l-3-4m3 4l3-4"/></svg>
+          Compare
+        </a></li>
+        <li><a class="oz-nav__link" href="dashboard.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 20V10M11 20V4M18 20v-7"/></svg>
+          Dashboard
+        </a></li>
+        <li><a class="oz-nav__link" href="education.html">
+          <svg class="oz-nav__icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 6.5C4 5.7 4.7 5 5.5 5H12v14H5.5c-.8 0-1.5-.7-1.5-1.5v-11z"/><path d="M20 6.5c0-.8-.7-1.5-1.5-1.5H12v14h6.5c.8 0 1.5-.7 1.5-1.5v-11z"/></svg>
+          Learn
+        </a></li>
+      </ul>
+    </nav>
+    <span class="oz-theme-switcher-label">Theme</span>
+    <div data-theme-switcher></div>
+    <div class="oz-sidebar__footer">Generated locally using the Web Crypto API's CSPRNG. Nothing is transmitted.</div>
+  </aside>
+
+  <div style="flex:1; min-width:0; display:flex; flex-direction:column;">
+    <div class="oz-topbar">
+      <div class="oz-brand"><div class="oz-brand__mark">OZ</div><div class="oz-brand__name">OCTOZOPIA</div></div>
+      <button class="oz-nav__toggle" data-nav-toggle aria-label="Open navigation" aria-expanded="false">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+    </div>
+
+    <main class="oz-main">
+      <div class="oz-page-header">
+        <span class="oz-eyebrow">CSPRNG · Web Crypto API</span>
+        <h1 class="oz-page-title">Secure Generator</h1>
+        <p class="oz-page-sub">Create strong random passwords or memorable passphrases. Everything is generated with <code class="oz-mono">crypto.getRandomValues</code> — never <code class="oz-mono">Math.random</code>.</p>
+      </div>
+
+      <!-- Tabs -->
+      <div style="display:flex; gap:8px; margin-bottom:18px; flex-wrap:wrap;">
+        <button class="oz-btn oz-btn--primary" id="tab-password" data-tab="password">Password</button>
+        <button class="oz-btn oz-btn--secondary" id="tab-passphrase" data-tab="passphrase">Passphrase</button>
+        <button class="oz-btn oz-btn--secondary" id="tab-personalize" data-tab="personalize">Personalize <span style="opacity:.7; font-weight:500;">(optional)</span></button>
+      </div>
+
+      <!-- Password generator panel -->
+      <div id="panel-password">
+        <div class="oz-card" style="margin-bottom:20px;">
+          <div class="oz-card__title">Generated password</div>
+          <div class="oz-input-wrap" style="margin-bottom:6px;">
+            <div class="oz-password-display" id="pw-output" style="flex:1; padding:14px 12px; font-size:19px; word-break:break-all;">Click Generate to begin</div>
+            <div class="oz-input-actions">
+              <button class="oz-icon-btn" id="btn-copy-pw" title="Copy" aria-label="Copy generated password">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+              </button>
+              <button class="oz-icon-btn" id="btn-regen-pw" title="Regenerate (Ctrl+Enter)" aria-label="Regenerate">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M5 15a8 8 0 0014 3M19 9a8 8 0 00-14-3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="oz-level-pill" id="pw-strength-pill" style="background:var(--oz-safe-soft); color:var(--oz-safe);">—</span>
+            <span style="font-size:12px; color:var(--oz-ink-faint);" id="pw-entropy-readout"></span>
+          </div>
+        </div>
+
+        <div class="oz-card">
+          <div class="oz-card__title">Options</div>
+          <div style="margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--oz-ink-soft); margin-bottom:6px;">
+              <span>Length</span><span class="oz-mono" id="length-readout-gen">20</span>
+            </div>
+            <input type="range" min="8" max="64" value="20" id="length-slider" class="oz-slider" />
+          </div>
+          <div class="oz-option-row"><span>Uppercase letters (A–Z)</span><button class="oz-toggle" id="opt-upper" role="switch" aria-checked="true"></button></div>
+          <div class="oz-option-row"><span>Lowercase letters (a–z)</span><button class="oz-toggle" id="opt-lower" role="switch" aria-checked="true"></button></div>
+          <div class="oz-option-row"><span>Numbers (0–9)</span><button class="oz-toggle" id="opt-numbers" role="switch" aria-checked="true"></button></div>
+          <div class="oz-option-row"><span>Symbols (!@#$…)</span><button class="oz-toggle" id="opt-symbols" role="switch" aria-checked="true"></button></div>
+          <div class="oz-option-row"><span>Exclude similar characters (l, 1, I, O, 0)</span><button class="oz-toggle" id="opt-exclude" role="switch" aria-checked="false"></button></div>
+          <button class="oz-btn oz-btn--primary oz-btn--block" id="btn-generate-pw" style="margin-top:16px;">Generate password</button>
+        </div>
+      </div>
+
+      <!-- Passphrase generator panel -->
+      <div id="panel-passphrase" style="display:none;">
+        <div class="oz-card" style="margin-bottom:20px;">
+          <div class="oz-card__title">Generated passphrase</div>
+          <div class="oz-input-wrap" style="margin-bottom:6px;">
+            <div class="oz-password-display" id="pp-output" style="flex:1; padding:14px 12px; font-size:19px; word-break:break-all;">Click Generate to begin</div>
+            <div class="oz-input-actions">
+              <button class="oz-icon-btn" id="btn-copy-pp" title="Copy" aria-label="Copy generated passphrase">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+              </button>
+              <button class="oz-icon-btn" id="btn-regen-pp" title="Regenerate" aria-label="Regenerate">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M5 15a8 8 0 0014 3M19 9a8 8 0 00-14-3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px;">
+            <span class="oz-level-pill" id="pp-strength-pill" style="background:var(--oz-safe-soft); color:var(--oz-safe);">—</span>
+            <span style="font-size:12px; color:var(--oz-ink-faint);" id="pp-entropy-readout"></span>
+          </div>
+        </div>
+
+        <div class="oz-card">
+          <div class="oz-card__title">Options</div>
+          <div style="margin-bottom:16px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--oz-ink-soft); margin-bottom:6px;">
+              <span>Number of words</span><span class="oz-mono" id="words-readout">4</span>
+            </div>
+            <input type="range" min="3" max="10" value="4" id="words-slider" class="oz-slider" />
+          </div>
+          <div style="margin-bottom:14px;">
+            <label style="font-size:13px; color:var(--oz-ink-soft); display:block; margin-bottom:6px;">Separator</label>
+            <select id="separator-select" class="oz-input-wrap" style="width:100%; padding:8px 10px; font-family:var(--oz-font-mono);">
+              <option value="-">hyphen ( - )</option>
+              <option value="_">underscore ( _ )</option>
+              <option value=".">dot ( . )</option>
+              <option value=" ">space ( )</option>
+              <option value="">none</option>
+            </select>
+          </div>
+          <div class="oz-option-row"><span>Capitalize each word</span><button class="oz-toggle" id="pp-opt-capitalize" role="switch" aria-checked="true"></button></div>
+          <div class="oz-option-row"><span>Add a number</span><button class="oz-toggle" id="pp-opt-numbers" role="switch" aria-checked="true"></button></div>
+          <div class="oz-option-row"><span>Add a symbol</span><button class="oz-toggle" id="pp-opt-symbols" role="switch" aria-checked="false"></button></div>
+          <button class="oz-btn oz-btn--primary oz-btn--block" id="btn-generate-pp" style="margin-top:16px;">Generate passphrase</button>
+        </div>
+      </div>
+
+      <!-- Personalize & Strengthen panel -->
+      <div id="panel-personalize" style="display:none;">
+        <div class="oz-card" style="margin-bottom:20px;">
+          <div class="oz-card__title">Build a password from your own info</div>
+          <p class="oz-card__sub">Enter a name, date and/or number you'll remember. OCTOZOPIA transforms and strengthens it locally — it never uses these values unmodified.</p>
+          <div class="oz-grid-3" style="margin-bottom:6px;">
+            <div>
+              <label style="font-size:12.5px; color:var(--oz-ink-soft); display:block; margin-bottom:6px;">Name or word</label>
+              <div class="oz-input-wrap"><input id="pi-name" class="oz-password-input" type="text" style="font-family:var(--oz-font-body); font-size:14px;" autocomplete="off" placeholder="e.g. Chidi" /></div>
+            </div>
+            <div>
+              <label style="font-size:12.5px; color:var(--oz-ink-soft); display:block; margin-bottom:6px;">Date</label>
+              <div class="oz-input-wrap"><input id="pi-date" class="oz-password-input" type="text" style="font-family:var(--oz-font-body); font-size:14px;" autocomplete="off" placeholder="e.g. 14/03/1999" /></div>
+            </div>
+            <div>
+              <label style="font-size:12.5px; color:var(--oz-ink-soft); display:block; margin-bottom:6px;">Number</label>
+              <div class="oz-input-wrap"><input id="pi-number" class="oz-password-input" type="text" style="font-family:var(--oz-font-body); font-size:14px;" autocomplete="off" placeholder="e.g. 07" /></div>
+            </div>
+          </div>
+          <p style="font-size:12px; color:var(--oz-ink-faint); margin:2px 0 16px;">At least one field is used — anything left blank is skipped.</p>
+
+          <div style="margin-bottom:14px;">
+            <div style="display:flex; justify-content:space-between; font-size:13px; color:var(--oz-ink-soft); margin-bottom:6px;">
+              <span>Random padding characters</span><span class="oz-mono" id="padding-readout">6</span>
+            </div>
+            <input type="range" min="0" max="16" value="6" id="padding-slider" class="oz-slider" />
+          </div>
+          <div class="oz-option-row"><span>Leetspeak substitution (a→@, e→3…)</span><button class="oz-toggle" id="pi-opt-leet" role="switch" aria-checked="true"></button></div>
+          <div class="oz-option-row"><span>Add a symbol between segments</span><button class="oz-toggle" id="pi-opt-symbols" role="switch" aria-checked="true"></button></div>
+          <div class="oz-option-row"><span>Shuffle segment order</span><button class="oz-toggle" id="pi-opt-shuffle" role="switch" aria-checked="true"></button></div>
+          <button class="oz-btn oz-btn--primary oz-btn--block" id="btn-generate-pi" style="margin-top:16px;">Strengthen it</button>
+        </div>
+
+        <div class="oz-card" style="margin-bottom:20px;">
+          <div class="oz-card__title">Result</div>
+          <div class="oz-input-wrap" style="margin-bottom:10px;">
+            <div class="oz-password-display" id="pi-output" style="flex:1; padding:14px 12px; font-size:19px; word-break:break-all;">Fill in a field and click Strengthen it</div>
+            <div class="oz-input-actions">
+              <button class="oz-icon-btn" id="btn-copy-pi" title="Copy" aria-label="Copy generated password">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15V5a2 2 0 012-2h10"/></svg>
+              </button>
+              <button class="oz-icon-btn" id="btn-regen-pi" title="Regenerate" aria-label="Regenerate">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4v6h6M20 20v-6h-6"/><path d="M5 15a8 8 0 0014 3M19 9a8 8 0 00-14-3"/></svg>
+              </button>
+            </div>
+          </div>
+          <div style="display:flex; align-items:center; gap:10px; margin-bottom:14px;">
+            <span class="oz-level-pill" id="pi-strength-pill" style="background:var(--oz-safe-soft); color:var(--oz-safe);">—</span>
+            <span style="font-size:12px; color:var(--oz-ink-faint);" id="pi-entropy-readout"></span>
+          </div>
+          <div id="pi-segments" style="margin-bottom:14px;"></div>
+          <div class="oz-card__title" style="font-size:13px;">What we changed</div>
+          <ul class="oz-steps-list" id="pi-steps"></ul>
+          <div class="oz-caution" style="margin-top:14px;">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 9v4M12 17h.01M10.3 3.9L1.8 18a2 2 0 001.7 3h17a2 2 0 001.7-3L13.7 3.9a2 2 0 00-3.4 0z"/></svg>
+            <span>Built from information about you, so it's inherently more guessable than a fully random password if that name/date/number is public. Prefer the Password or Passphrase tab for your most sensitive accounts.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="oz-fact-bar" style="margin-top:20px;">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" style="flex-shrink:0;"><path d="M12 2l2.4 5.2L20 8l-4 4 1 5.6L12 15l-5 2.6L8 12 4 8l5.6-.8L12 2z"/></svg>
+        <span class="oz-fact-text" id="fact-text"></span>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script src="/common.js"></script>
+<script src="/generator.js"></script>
+</body>
+</html>
