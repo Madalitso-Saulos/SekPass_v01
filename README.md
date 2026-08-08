@@ -1,4 +1,4 @@
-# OCTOZOPIA — Password Strength Analyzer
+# SekPass — Password Strength Analyzer
 
 A local-first, cybersecurity-grade password strength analyzer built with **HTML5, CSS3, TypeScript, and the Web Crypto API**. No frameworks. No servers. Nothing you type is ever transmitted, logged, or stored outside your own browser.
 
