@@ -39,14 +39,11 @@
   --oz-font-body: "Inter", system-ui, sans-serif;
   --oz-font-mono: "JetBrains Mono", "SFMono-Regular", Menlo, monospace;
 
-  /* Fixed "terminal" panels (heatmap / toast / fact bar) stay dark across
-     every theme on purpose — it's the app's signature chrome. */
   --oz-panel-dark: #0b1f33;
   --oz-panel-dark-2: #123249;
 }
 
 /* ───────────────────────── Themes ───────────────────────── */
-/* Default (no attribute) = Sky. Switch via document.documentElement[data-theme]. */
 
 [data-theme="midnight"] {
   --oz-bg: #0b1420;
