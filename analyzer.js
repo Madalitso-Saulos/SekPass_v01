@@ -1,7 +1,7 @@
 "use strict";
 /// <reference path="common.ts" />
 /**
- * OCTOZOPIA — analyzer.ts
+ * SekPass — analyzer.ts
  * Wires the Analyzer page UI to the pure functions in common.ts.
  * No password is ever logged, stored verbatim, or transmitted.
  */
@@ -211,14 +211,14 @@ var OZ;
                     : "Not found in any known breach"
             : "Not checked";
         const maskedLength = result.length;
-        const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>OCTOZOPIA Security Report</title>
+        const html = `<!DOCTYPE html><html><head><meta charset="UTF-8"><title>SEKPASS Security Report</title>
       <style>
         body{font-family:Inter,system-ui,sans-serif;color:#0b1f33;max-width:640px;margin:40px auto;padding:0 20px;}
         h1{font-size:20px;} table{width:100%;border-collapse:collapse;margin-top:16px;}
         td,th{padding:8px;border-bottom:1px solid #dce7f0;text-align:left;font-size:13.5px;}
         .badge{display:inline-block;padding:4px 10px;border-radius:999px;font-weight:700;font-size:12.5px;}
       </style></head><body>
-      <h1>OCTOZOPIA — Password Security Report</h1>
+      <h1>SEKPASS — Password Security Report</h1>
       <p style="color:#4a6178;font-size:13px;">Generated locally in your browser. The password itself is never included in this report.</p>
       <table>
         <tr><th>Date analyzed</th><td>${OZ.escapeHtml(date)}</td></tr>
@@ -236,7 +236,7 @@ var OZ;
         const url = URL.createObjectURL(blob);
         const a = document.createElement("a");
         a.href = url;
-        a.download = `octozopia-report-${Date.now()}.html`;
+        a.download = `SekPass-report-${Date.now()}.html`;
         a.click();
         URL.revokeObjectURL(url);
         OZ.showToast("Report downloaded", "success");

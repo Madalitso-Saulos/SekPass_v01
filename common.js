@@ -1,6 +1,6 @@
 "use strict";
 /**
- * OCTOZOPIA — Password Strength Analyzer
+ * SEKPASS— Password Strength Analyzer
  * common.ts
  *
  * Shared types, data sets and pure analysis functions used across every page.
@@ -799,7 +799,7 @@ var OZ;
     }
     OZ.checkPwned = checkPwned;
     // ───────────────────────────── Storage (metadata only) ──────────────────────────────
-    const HISTORY_KEY = "octozopia_history_v1";
+    const HISTORY_KEY = "SekPass_history_v1";
     const MAX_HISTORY = 25;
     function saveHistoryEntry(entry) {
         const history = getHistory();
@@ -910,7 +910,7 @@ var OZ;
     }
     OZ.formatNumber = formatNumber;
     // ───────────────────────────── Theming ──────────────────────────────
-    const THEME_KEY = "octozopia_theme_v1";
+    const THEME_KEY = "SekPass_theme_v1";
     OZ.THEMES = [
         { id: "sky", label: "Sky (light)", swatch: "linear-gradient(135deg,#eef5fb,#0ea5a0)" },
         { id: "midnight", label: "Midnight", swatch: "linear-gradient(135deg,#0b1f33,#0ea5a0)" },
