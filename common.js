@@ -12,7 +12,6 @@
  */
 var OZ;
 (function (OZ) {
-    // ───────────────────────────── Types ──────────────────────────────
     // ───────────────────────────── Data ──────────────────────────────
     const CHAR_SETS = {
         lower: "abcdefghijklmnopqrstuvwxyz",
