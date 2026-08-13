@@ -1,5 +1,5 @@
 <p align="center">
-  <img src="/SekPass_Cover.png" alt="SekPass logo" width="480">
+  <img src="SekPass_Cover.png" alt="SekPass logo" width="480">
 </p>
 
 # SekPass — Password Strength Analyzer
